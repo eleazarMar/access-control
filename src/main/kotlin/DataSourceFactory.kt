@@ -1,6 +1,9 @@
 import com.mysql.cj.jdbc.Driver
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
+import org.jdbi.v3.core.Jdbi
+import org.jdbi.v3.core.kotlin.KotlinPlugin
+import javax.sql.DataSource
 
 class DataSourceFactory(dbConfig: DBConfig) {
     val datasource: HikariDataSource
@@ -14,5 +17,14 @@ class DataSourceFactory(dbConfig: DBConfig) {
         }
 
         datasource = HikariDataSource(config)
+    }
+}
+
+
+class JdbiFactory(dataSource: DataSource) {
+    val jdbi: Jdbi = Jdbi.create(dataSource)
+
+    init {
+        jdbi.installPlugin(KotlinPlugin())
     }
 }

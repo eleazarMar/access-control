@@ -30,6 +30,7 @@ dependencies {
     implementation("io.ktor:ktor-server-netty:1.4.0")
     implementation("mysql:mysql-connector-java:8.0.21")
     implementation("org.flywaydb:flyway-core:6.5.5")
+    implementation("org.jdbi:jdbi3-kotlin:3.14.4")
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.2")
 }
 tasks.withType<KotlinCompile> {
