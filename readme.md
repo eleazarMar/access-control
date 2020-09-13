@@ -12,6 +12,21 @@ Anything else.  There is no frontend, membership control, training record, payme
 There may be future membership management systems, and it is expected they will eventually take over the responsibilities of this system, with their own database
 
 ## Developing and Building
+### Prerequisites
+All building runs inside docker for cross-platform happiness, but for full development, you should have:
+* JDK-13
+* Intellij Community
+* Docker & docker-compose to run the full stack
+
 The system is written in Kotlin, a JVM-based language chosen by the developer for familiarity.  All building and testing is performed in docker, so should be machine-agnostic
 
-run `make build` in your system of choice to compile and package the system
+run `./gradlew assemble installDist` to build the app locally.  You'll need JDK13 for this
+run `make package` in your system of choice to compile and package the system
+run `make compose` in your system of choice to run it up locally in docker-compose
+
+## The API
+`GET /equipment/activate?device=laser&rfid=0123456789ABCD`
+
+will yield
+
+`{"grant":true,"rfid":"0123456789ABCD","device":"laser"}`

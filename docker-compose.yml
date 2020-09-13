@@ -1,6 +1,22 @@
 version: "3.7"
 
 services:
+  access-control:
+    depends_on:
+      - db
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    environment:
+      PORT: 80
+      HTTPS_ENABLED: "false"
+      HTTPS_CA: none
+      HTTPS_PEM: also_none
+      DB_HOST: db
+      DB_USERNAME: accesscontrol
+      DB_PASSWORD: Password123!
+      DB_NAME: hackspace
+
   db:
     image: mysql:8
     ports:
