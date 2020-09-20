@@ -18,8 +18,8 @@ fun main() {
     val config = ConfigFactory.load().extract<OverallConfig>()
     val datasource = DataSourceFactory(config.db).datasource
     val jdbi = JdbiFactory(datasource).jdbi
-    val activationHandler = ActivationHandler(jdbi)
     val eventLogger = DeviceEventLogger(jdbi)
+    val activationHandler = ActivationHandler(jdbi, eventLogger)
 
     Flyway.configure().dataSource(datasource).load().migrate()
 
@@ -48,14 +48,9 @@ fun main() {
                     return@get
                 }
 
-                val grant = activationHandler.accessIsAllowed(device, rfid)
-                if(grant) {
-                    eventLogger.logActivationSuccess(rfid, device)
-                } else {
-                    eventLogger.logActivationDenied(rfid, device)
-                }
+                val activationResponse = activationHandler.accessIsAllowed(device, rfid)
 
-                call.respond(ActivationResponse(grant, rfid, device))
+                call.respond(activationResponse)
             }
 
             get("/equipment/deactivate") {
@@ -80,4 +75,7 @@ fun main() {
     }.start(wait = true)
 }
 
-data class ActivationResponse(val grant: Boolean, val rfid: String?, val device: String?)
+data class ActivationResponse(val grant: Boolean, val rfid: String?, val device: String?, val secondsActivation: Int)
+
+// Support multiple rfids
+// support pull down of auth db
