@@ -34,16 +34,16 @@ fun main() {
                 call.respond(HttpStatusCode.OK, "This is access-control: ${Instant.now()}")
             }
 
-            get("/equipment/activate"){
+            get("/equipment/activate") {
 
                 val device = call.request.queryParameters["device"]
                 val rfid = call.request.queryParameters["rfid"]
 
-                if(device == null){
+                if (device == null) {
                     call.respond(HttpStatusCode.BadRequest, "device must be specified")
                     return@get
                 }
-                if(rfid == null){
+                if (rfid == null) {
                     call.respond(HttpStatusCode.BadRequest, "rfid must be specified")
                     return@get
                 }
@@ -58,16 +58,16 @@ fun main() {
                 call.respond(ActivationResponse(grant, rfid, device))
             }
 
-            get("/equipment/deactivate"){
+            get("/equipment/deactivate") {
 
                 val device = call.request.queryParameters["device"]
                 val rfid = call.request.queryParameters["rfid"]
 
-                if(device == null){
+                if (device == null) {
                     call.respond(HttpStatusCode.BadRequest, "device must be specified")
                     return@get
                 }
-                if(rfid == null){
+                if (rfid == null) {
                     call.respond(HttpStatusCode.BadRequest, "rfid must be specified")
                     return@get
                 }

@@ -20,7 +20,6 @@ class DataSourceFactory(dbConfig: DBConfig) {
     }
 }
 
-
 class JdbiFactory(dataSource: DataSource) {
     val jdbi: Jdbi = Jdbi.create(dataSource)
 

@@ -1,5 +1,6 @@
 package db
 
+import SqlResource
 import org.jdbi.v3.core.Jdbi
 
 class DeviceEventLogger(private val jdbi: Jdbi) {
@@ -14,7 +15,7 @@ class DeviceEventLogger(private val jdbi: Jdbi) {
     fun logActivationSuccess(rfid: String, device: String) = logEvent(rfid, device, activationSuccess)
     fun logDeactivation(rfid: String, device: String) = logEvent(rfid, device, deactivation)
 
-    private fun logEvent(rfid: String, device: String, event: String){
+    private fun logEvent(rfid: String, device: String, event: String) {
         jdbi.useHandle<Exception> {
             it.createUpdate(logDeviceEventSql)
                 .bind("rfid", rfid)
@@ -23,6 +24,4 @@ class DeviceEventLogger(private val jdbi: Jdbi) {
                 .execute()
         }
     }
-
 }
-
