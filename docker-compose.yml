@@ -23,11 +23,8 @@ services:
     - ./docker/docker-compose-init.sh:/opt/application/docker-compose-init.sh
 
   db:
-    image: mysql:8
+    image: postgres
     ports:
-      - 3306:3306
+      - 5432:5432
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_USER: accesscontrol
-      MYSQL_PASSWORD: Password123!
-      MYSQL_DATABASE: hackspace
+      POSTGRES_PASSWORD: password
